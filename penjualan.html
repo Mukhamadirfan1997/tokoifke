@@ -11,9 +11,9 @@
         /* Variabel Warna */
         :root {
             --primary-color: #007bff;
-            --secondary-color: #6c757d;
+            --secondary-color: #7d7a6c;
             --success-color: #28a745;
-            --background-light: #71b9e8;
+            --background-light: #f8f9fa;
             --text-color: #343a40;
             --border-color: #dee2e6;
         }
@@ -22,7 +22,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: var(--background-light);
+            background-color: #71b9e8;
             color: var(--text-color);
         }
 
@@ -49,12 +49,13 @@
             flex-shrink: 0;
             line-height: 0;
         }
+
         .logo {
             max-width: 70px;
             height: auto;
             border-radius: 5px;
         }
-        
+
         .header-text {
             flex-grow: 1;
         }
@@ -72,7 +73,7 @@
             color: var(--secondary-color);
             font-size: 0.9rem;
         }
-        
+
         /* Filter dan Tombol */
         .filter-container {
             display: flex;
@@ -85,13 +86,13 @@
             border-radius: 5px;
             background-color: #f4f6f9;
         }
-        
+
         .filter-item label {
             font-weight: 600;
             color: var(--text-color);
             margin-right: 5px;
         }
-        
+
         .filter-item input[type="date"] {
             padding: 8px;
             border: 1px solid #ccc;
@@ -112,9 +113,9 @@
             background-color: var(--success-color);
             color: white;
         }
-        
+
         .btn-secondary {
-            background-color: var(--secondary-color);
+            background-color: #ee9836;
             color: white;
         }
 
@@ -123,7 +124,7 @@
             gap: 10px;
             margin-bottom: 20px;
         }
-        
+
         /* Total Penjualan Display */
         .total-sales-box {
             background-color: var(--primary-color);
@@ -161,7 +162,8 @@
             background-color: white;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
@@ -184,12 +186,14 @@
             background-color: #e9ecef;
             transition: background-color 0.2s;
         }
-        
+
         /* Gaya Status & Error */
-        .loading, .error {
+        .loading,
+        .error {
             text-align: center;
             padding: 20px;
         }
+
         .error {
             color: #dc3545;
             font-weight: 600;
@@ -205,18 +209,22 @@
                 align-items: flex-start;
             }
         }
+
         @media (max-width: 576px) {
             .header-section {
                 flex-direction: column;
                 align-items: flex-start;
             }
+
             .nav-buttons {
                 flex-direction: column;
             }
+
             .btn {
                 width: 100%;
                 text-align: center;
             }
+
             h1 {
                 font-size: 1.5rem;
             }
@@ -226,17 +234,17 @@
 
 <body class="data-page-body">
     <div class="container data-page">
-        
+
         <div class="header-section">
             <div class="logo-container">
-                <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" /> 
+                <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" />
             </div>
             <div class="header-text">
                 <h1>Data Penjualan</h1>
                 <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
             </div>
         </div>
-        
+
         <div class="filter-container">
             <div class="filter-item">
                 <label for="filter-start-date">Tanggal Mulai:</label>
@@ -253,20 +261,20 @@
             <a href="index.html" class="btn btn-primary">➕ Tambah Data Baru</a>
             <button id="btn-refresh" class="btn btn-secondary">🔄 Muat Ulang Data</button>
         </div>
-        
+
         <div class="total-sales-box">
             Total Penjualan yang Ditampilkan: <span id="total-sales-display">Rp 0</span>
         </div>
-        
+
         <div id="employee-data">
             <p class="loading">Memuat data...</p>
         </div>
     </div>
-    
+
     <script>
         const googleSheetUrl =
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
-        
+
         let allSalesData = [];
         let headerRow = [];
 
@@ -292,11 +300,11 @@
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const csvText = await response.text();
-                
+
                 // Menggunakan Regex untuk menangani kasus koma di dalam tanda kutip (lebih kuat)
                 const rows = csvText.split('\n').map(row => {
                     // Split berdasarkan koma di luar tanda kutip
-                    return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [row]; 
+                    return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [row];
                 }).filter(row => row.join('').trim() !== "");
 
                 if (rows.length < 2) {
@@ -308,7 +316,7 @@
 
                 headerRow = rows[0].map(h => cleanCellValue(h));
                 allSalesData = rows.slice(1).map(row => row.map(cell => cleanCellValue(cell)));
-                
+
                 applyFilterAndRender();
 
             } catch (error) {
@@ -323,16 +331,16 @@
             const startDateStr = document.getElementById('filter-start-date').value;
             const endDateStr = document.getElementById('filter-end-date').value;
             let totalSales = 0;
-            
+
             let filteredData = allSalesData;
-            
+
             // 1. Logika Pemfilteran Tanggal
             if (startDateStr || endDateStr) {
                 const startDate = startDateStr ? new Date(startDateStr) : null;
                 const endDate = endDateStr ? new Date(endDateStr) : null;
 
                 filteredData = allSalesData.filter(row => {
-                    const dateIndex = 0; 
+                    const dateIndex = 0;
                     const rowDateStr = row[dateIndex];
 
                     if (!rowDateStr) return false;
@@ -356,13 +364,13 @@
             }
 
             // 2. Perhitungan Total Penjualan & Merender Tabel
-            
+
             // PERBAIKAN: Hanya mencari header yang mengandung kata 'total' (sesuai permintaan user)
             const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total'));
-            
+
             let html = "<div class='table-responsive'>";
             html += "<table><thead><tr>";
-            
+
             headerRow.forEach((header) => {
                 html += `<th>${header}</th>`;
             });
@@ -383,7 +391,7 @@
                     html += "</tr>";
                 });
             } else {
-                 // Jika kolom Total tidak ditemukan
+                // Jika kolom Total tidak ditemukan
                 filteredData.forEach(row => {
                     html += "<tr>";
                     row.forEach((cell) => {
@@ -398,13 +406,13 @@
             html += "</div>";
 
             document.getElementById("employee-data").innerHTML = html;
-            
+
             // Perbarui Total Penjualan
             if (totalIndex !== -1) {
                 document.getElementById('total-sales-display').innerText = formatRupiah(totalSales);
             }
         }
-        
+
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             fetchAllData();
@@ -420,4 +428,3 @@
 </body>
 
 </html>
-
