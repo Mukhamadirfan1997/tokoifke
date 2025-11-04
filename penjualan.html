@@ -11,7 +11,8 @@
     <style>
         body {
             font-family: "Roboto", sans-serif;
-            margin: 20px;
+            margin: 0; /* Disesuaikan untuk responsivitas */
+            padding: 20px;
             background-color: #b3e3f5;
             color: #333;
         }
@@ -34,14 +35,23 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
+        /* --- CSS RESPONSIF BARU DITAMBAHKAN --- */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* -------------------------------------- */
+
         table {
             width: 100%;
+            min-width: 600px; /* Minimal lebar agar kolom tidak terlalu sempit di layar kecil */
             border-collapse: collapse;
-            margin-top: 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             border-radius: 8px;
             overflow: hidden;
-            /* For rounded corners */
+            /* Dipindahkan ke .table-responsive */
         }
 
         th,
@@ -50,6 +60,7 @@
             padding: 12px 15px;
             text-align: left;
             vertical-align: middle;
+            white-space: nowrap; /* Mencegah konten sel tabel pecah baris terlalu cepat */
         }
 
         th {
@@ -112,22 +123,12 @@
             <button id="btn-refresh" class="btn btn-secondary">Refresh Data</button>
         </div>
         <div class="container">
-            <!-- <h1>Data Akun Info GTK SDN TOYANING I</h1>
-            <a
-              href="https://portal-admin-sd-toyaning-01.vercel.app/"
-              class="button-link"
-              >Kembali Ke Portal Admin</a
-            > -->
             <div id="employee-data">
                 <p class="loading">Memuat data...</p>
             </div>
         </div>
 
         <script>
-            // Ganti URL ini dengan URL Google Sheets API Anda
-            // Cara mendapatkan URL ini:
-            // 1. Publikasikan Google Sheet Anda sebagai CSV: File > Bagikan > Publikasikan ke web > Pilih "CSV" untuk sheet yang diinginkan.
-            // 2. Salin URL yang diberikan. Contoh: https://docs.google.com/spreadsheets/d/e/2PACX-1vR-f.../pub?gid=0&single=true&output=csv
             const googleSheetUrl =
                 "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
 
@@ -138,7 +139,6 @@
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     const csvText = await response.text();
-                    // Pisahkan baris, lalu pisahkan kolom. Filter baris kosong.
                     const rows = csvText
                         .split("\n")
                         .map((row) => row.split(","))
@@ -150,7 +150,9 @@
                         return;
                     }
 
-                    let html = "<table><thead><tr>";
+                    // --- PERBAIKAN LOGIKA JS UNTUK RESPONSIF ---
+                    let html = "<div class='table-responsive'>";
+                    html += "<table><thead><tr>";
                     // Asumsi baris pertama adalah header
                     rows[0].forEach((header) => {
                         html += `<th>${header.trim()}</th>`;
@@ -166,6 +168,8 @@
                         html += "</tr>";
                     }
                     html += "</tbody></table>";
+                    html += "</div>"; // Tutup div.table-responsive
+                    // ------------------------------------------
 
                     document.getElementById("employee-data").innerHTML = html;
                 } catch (error) {
@@ -178,8 +182,14 @@
             }
 
             fetchEmployeeData();
+            
+            // Tambahkan fungsionalitas refresh
+            document.getElementById("btn-refresh").addEventListener("click", () => {
+                document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
+                fetchEmployeeData();
+            });
         </script>
-
+    </div>
 
 </body>
 
