@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Permissions-Policy" content="web-share=()" />
+    <title>Data Penjualan - Toko IFKE</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 20px;
+            background-color: #b3e3f5;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            /* For rounded corners */
+        }
+
+        th,
+        td {
+            border: 1px solid #e0e0e0;
+            padding: 12px 15px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #ffffff;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
+        }
+
+        tr:hover {
+            background-color: #eaf6fd;
+            transition: background-color 0.3s ease;
+        }
+
+        .loading {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            padding: 20px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-left: 30px;
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .button-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body class="data-page-body">
+    <div class="container data-page">
+        <div class="logo-container">
+            <img src="tokoifke.png" alt="Logo Toko" class="logo" />
+        </div>
+
+        <h1>Data Penjualan</h1>
+        <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">Tambah Data Baru</a>
+            <button id="btn-refresh" class="btn btn-secondary">Refresh Data</button>
+        </div>
+        <div class="container">
+            <!-- <h1>Data Akun Info GTK SDN TOYANING I</h1>
+            <a
+              href="https://portal-admin-sd-toyaning-01.vercel.app/"
+              class="button-link"
+              >Kembali Ke Portal Admin</a
+            > -->
+            <div id="employee-data">
+                <p class="loading">Memuat data...</p>
+            </div>
+        </div>
+
+        <script>
+            // Ganti URL ini dengan URL Google Sheets API Anda
+            // Cara mendapatkan URL ini:
+            // 1. Publikasikan Google Sheet Anda sebagai CSV: File > Bagikan > Publikasikan ke web > Pilih "CSV" untuk sheet yang diinginkan.
+            // 2. Salin URL yang diberikan. Contoh: https://docs.google.com/spreadsheets/d/e/2PACX-1vR-f.../pub?gid=0&single=true&output=csv
+            const googleSheetUrl =
+                "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
+
+            async function fetchEmployeeData() {
+                try {
+                    const response = await fetch(googleSheetUrl);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const csvText = await response.text();
+                    // Pisahkan baris, lalu pisahkan kolom. Filter baris kosong.
+                    const rows = csvText
+                        .split("\n")
+                        .map((row) => row.split(","))
+                        .filter((row) => row.join("").trim() !== "");
+
+                    if (rows.length === 0) {
+                        document.getElementById("employee-data").innerHTML =
+                            '<p class="error">Tidak ada data ditemukan.</p>';
+                        return;
+                    }
+
+                    let html = "<table><thead><tr>";
+                    // Asumsi baris pertama adalah header
+                    rows[0].forEach((header) => {
+                        html += `<th>${header.trim()}</th>`;
+                    });
+                    html += "</tr></thead><tbody>";
+
+                    // Iterasi dari baris kedua (data)
+                    for (let i = 1; i < rows.length; i++) {
+                        html += "<tr>";
+                        rows[i].forEach((cell) => {
+                            html += `<td>${cell.trim()}</td>`;
+                        });
+                        html += "</tr>";
+                    }
+                    html += "</tbody></table>";
+
+                    document.getElementById("employee-data").innerHTML = html;
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    document.getElementById("employee-data").innerHTML =
+                        '<p class="error">Gagal memuat data. Pastikan URL Google Sheet benar dan dipublikasikan. Detail error: ' +
+                        error.message +
+                        "</p>";
+                }
+            }
+
+            fetchEmployeeData();
+        </script>
+
+
+</body>
+
+</html>
