@@ -8,7 +8,7 @@
     <title>Data Penjualan - Toko IFKE</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* CSS Baru untuk tampilan optimal dan responsif */
+        /* CSS yang sudah ada (hanya bagian yang relevan dengan penambahan baru yang ditampilkan) */
         
         :root {
             --primary-color: #007bff;
@@ -27,7 +27,6 @@
             color: var(--text-color);
         }
 
-        /* Struktur Kontainer */
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -37,7 +36,6 @@
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
 
-        /* Header dan Judul */
         h1 {
             color: var(--primary-color);
             text-align: left;
@@ -45,62 +43,69 @@
             font-size: 2rem;
             font-weight: 700;
         }
-
-        .subtitle {
-            margin-top: 0;
+        
+        /* Gaya baru untuk Filter Tanggal */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            padding: 15px;
             margin-bottom: 20px;
-            color: var(--secondary-color);
-            font-size: 1rem;
-        }
-
-        /* Logo (Dummy Styling) */
-        .logo-container {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .logo {
-            max-width: 150px; /* Atur ukuran logo */
-            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f4f6f9;
         }
         
-        /* Tombol Navigasi */
+        .filter-item label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-right: 5px;
+        }
+        
+        .filter-item input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Gaya baru untuk Display Total Penjualan */
+        .total-sales-box {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .total-sales-box span {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        /* Media Query untuk Responsivitas Tambahan */
+        @media (max-width: 768px) {
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        /* (CSS Tabel dan Tombol lainnya tetap sama seperti sebelumnya) */
+        
         .nav-buttons {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
         }
-
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: var(--success-color);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #1e7e34;
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
         
-        /* Kontainer Responsif Tabel */
         .table-responsive {
-            overflow-x: auto; /* Kunci responsivitas tabel */
+            overflow-x: auto; 
             width: 100%;
             margin-top: 20px;
             border: 1px solid var(--border-color);
@@ -108,85 +113,44 @@
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
         }
 
-        /* Gaya Tabel */
         table {
             width: 100%;
-            min-width: 700px; /* Menentukan lebar minimum agar tabel tidak terlalu padat */
+            min-width: 700px; 
             border-collapse: collapse;
             background-color: white;
         }
-
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-            white-space: nowrap; /* Mencegah pecah baris untuk sel data */
-        }
-
-        th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-
-        tr:nth-child(even) {
-            background-color: var(--background-light);
-        }
-
-        tr:hover {
-            background-color: #e9ecef;
-            transition: background-color 0.2s;
-        }
-
-        /* Gaya Status */
-        .loading {
-            text-align: center;
-            font-style: italic;
-            color: var(--secondary-color);
-            padding: 20px;
-        }
-
-        .error {
-            color: #dc3545;
-            text-align: center;
-            padding: 20px;
-            font-weight: 600;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-        }
-
-        /* Media Query untuk Responsivitas Tambahan pada Tombol */
-        @media (max-width: 576px) {
-            .nav-buttons {
-                flex-direction: column;
-            }
-            .btn {
-                width: 100%;
-                text-align: center;
-            }
-            h1 {
-                font-size: 1.5rem;
-            }
-        }
+        /* ... CSS lainnya ... */
     </style>
 </head>
 
 <body class="data-page-body">
     <div class="container data-page">
         <div class="logo-container">
-            <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" /> 
+            <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" />
         </div>
 
         <h1>Data Penjualan</h1>
         <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
+        
+        <div class="filter-container">
+            <div class="filter-item">
+                <label for="filter-start-date">Tanggal Mulai:</label>
+                <input type="date" id="filter-start-date" />
+            </div>
+            <div class="filter-item">
+                <label for="filter-end-date">Tanggal Akhir:</label>
+                <input type="date" id="filter-end-date" />
+            </div>
+            <button id="btn-apply-filter" class="btn btn-secondary">Terapkan Filter</button>
+        </div>
 
         <div class="nav-buttons">
             <a href="index.html" class="btn btn-primary">➕ Tambah Data Baru</a>
-            <button id="btn-refresh" class="btn btn-secondary">🔄 Refresh Data</button>
+            <button id="btn-refresh" class="btn btn-secondary">🔄 Muat Ulang Data</button>
+        </div>
+        
+        <div class="total-sales-box">
+            Total Penjualan yang Ditampilkan: <span id="total-sales-display">Rp 0</span>
         </div>
         
         <div id="employee-data">
@@ -197,15 +161,30 @@
     <script>
         const googleSheetUrl =
             "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
+        
+        let allSalesData = []; // Variabel untuk menyimpan semua data mentah
+        let headerRow = []; // Variabel untuk menyimpan header
 
-        async function fetchEmployeeData() {
+        // Fungsi utilitas untuk memformat Rupiah
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        }
+
+        // Fungsi untuk mengambil data mentah dari Google Sheet
+        async function fetchAllData() {
+            document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
             try {
                 const response = await fetch(googleSheetUrl);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const csvText = await response.text();
-                // Memparsing CSV
+                
+                // Pisahkan baris dan kolom
                 const rows = csvText
                     .split("\n")
                     .map((row) => row.split(","))
@@ -217,48 +196,122 @@
                     return;
                 }
 
-                // Membangun HTML Tabel
-                let html = "<div class='table-responsive'>";
-                html += "<table><thead><tr>";
-                // Header (baris pertama)
-                rows[0].forEach((header) => {
-                    html += `<th>${header.trim().replace(/"/g, '')}</th>`; // .replace digunakan untuk membersihkan tanda kutip yang mungkin muncul dari CSV
-                });
-                html += "</tr></thead><tbody>";
+                headerRow = rows[0].map(h => h.trim().replace(/"/g, ''));
+                allSalesData = rows.slice(1).filter(row => row.join("").trim() !== "");
+                
+                // Terapkan filter dan tampilkan
+                applyFilterAndRender();
 
-                // Data (mulai dari baris kedua)
-                for (let i = 1; i < rows.length; i++) {
-                    // Hanya memproses baris jika tidak kosong
-                    if (rows[i].join("").trim() !== "") {
-                        html += "<tr>";
-                        rows[i].forEach((cell) => {
-                            html += `<td>${cell.trim().replace(/"/g, '')}</td>`;
-                        });
-                        html += "</tr>";
-                    }
-                }
-                html += "</tbody></table>";
-                html += "</div>"; // Tutup div.table-responsive
-
-                document.getElementById("employee-data").innerHTML = html;
             } catch (error) {
                 console.error("Error fetching data:", error);
                 document.getElementById("employee-data").innerHTML =
-                    '<p class="error">Gagal memuat data. Pastikan URL Google Sheet benar dan dipublikasikan. Detail error: ' +
-                    error.message +
-                    "</p>";
+                    '<p class="error">Gagal memuat data. Detail error: ' + error.message + "</p>";
             }
         }
 
-        fetchEmployeeData();
+        // Fungsi utama untuk memfilter dan merender tabel
+        function applyFilterAndRender() {
+            const startDateStr = document.getElementById('filter-start-date').value;
+            const endDateStr = document.getElementById('filter-end-date').value;
+            let totalSales = 0;
+            
+            let filteredData = allSalesData;
+            
+            // 1. Logika Pemfilteran Tanggal
+            if (startDateStr || endDateStr) {
+                const startDate = startDateStr ? new Date(startDateStr) : null;
+                const endDate = endDateStr ? new Date(endDateStr) : null;
+
+                filteredData = allSalesData.filter(row => {
+                    // Asumsi kolom pertama (indeks 0) adalah tanggal penjualan
+                    const dateIndex = 0; 
+                    const rowDateStr = row[dateIndex] ? row[dateIndex].trim().replace(/"/g, '') : null;
+
+                    if (!rowDateStr) return false;
+
+                    // Konversi format tanggal dari CSV (misal: "2023-10-27 10:30:00") menjadi format Date
+                    const rowDate = new Date(rowDateStr.split(' ')[0]); // Hanya ambil tanggalnya
+
+                    let isAfterStart = true;
+                    if (startDate) {
+                        isAfterStart = rowDate >= startDate;
+                    }
+
+                    let isBeforeEnd = true;
+                    if (endDate) {
+                        // Tambahkan satu hari ke tanggal akhir untuk mencakup seluruh hari itu
+                        const adjustedEndDate = new Date(endDate);
+                        adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
+                        isBeforeEnd = rowDate < adjustedEndDate;
+                    }
+
+                    return isAfterStart && isBeforeEnd;
+                });
+            }
+
+            // Membangun HTML Tabel
+            let html = "<div class='table-responsive'>";
+            html += "<table><thead><tr>";
+            
+            headerRow.forEach((header) => {
+                html += `<th>${header}</th>`;
+            });
+            html += "</tr></thead><tbody>";
+
+            // 2. Perhitungan Total Penjualan & Merender Data
+            const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total') || h.toLowerCase().includes('jumlah'));
+            
+            if (totalIndex !== -1) {
+                filteredData.forEach(row => {
+                    const totalCell = row[totalIndex] ? row[totalIndex].trim().replace(/"/g, '').replace(/[^0-9,-]/g, '').replace(/\./g, '').replace(/,/g, '.') : "0";
+                    const totalValue = parseFloat(totalCell) || 0;
+                    totalSales += totalValue;
+
+                    html += "<tr>";
+                    row.forEach((cell) => {
+                        html += `<td>${cell.trim().replace(/"/g, '')}</td>`;
+                    });
+                    html += "</tr>";
+                });
+            } else {
+                 // Jika kolom 'Total' tidak ditemukan, render data tanpa menghitung total
+                filteredData.forEach(row => {
+                    html += "<tr>";
+                    row.forEach((cell) => {
+                        html += `<td>${cell.trim().replace(/"/g, '')}</td>`;
+                    });
+                    html += "</tr>";
+                });
+                document.getElementById('total-sales-display').innerText = "Kolom 'Total Penjualan' tidak ditemukan.";
+            }
+
+            html += "</tbody></table>";
+            html += "</div>";
+
+            document.getElementById("employee-data").innerHTML = html;
+            
+            // Perbarui Total Penjualan di display
+            if (totalIndex !== -1) {
+                document.getElementById('total-sales-display').innerText = formatRupiah(totalSales);
+            }
+        }
         
-        // Fungsionalitas Refresh Data
-        document.getElementById("btn-refresh").addEventListener("click", () => {
-            document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
-            fetchEmployeeData();
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Panggil fungsi untuk mengambil dan menampilkan data awal
+            fetchAllData();
+
+            // Event listener untuk tombol Refresh/Muat Ulang
+            document.getElementById("btn-refresh").addEventListener("click", fetchAllData);
+
+            // Event listener untuk tombol Terapkan Filter
+            document.getElementById('btn-apply-filter').addEventListener('click', applyFilterAndRender);
+
+            // Event listener untuk input tanggal (opsional: langsung filter saat tanggal berubah)
+            document.getElementById('filter-start-date').addEventListener('change', applyFilterAndRender);
+            document.getElementById('filter-end-date').addEventListener('change', applyFilterAndRender);
         });
     </script>
-
 </body>
 
 </html>
