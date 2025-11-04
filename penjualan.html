@@ -35,7 +35,7 @@
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
 
-        /* PERBAIKAN: Layout Header (Logo di Kiri, Judul di Kanan) */
+        /* PERBAIKAN LOGO: Rata Kiri dengan Flexbox */
         .header-section {
             display: flex;
             align-items: center;
@@ -46,8 +46,7 @@
         }
 
         .logo-container {
-            /* PERBAIKAN: Memastikan logo tidak rata tengah/terpisah */
-            flex-shrink: 0; /* Mencegah logo menyusut */
+            flex-shrink: 0;
             line-height: 0;
         }
         .logo {
@@ -57,7 +56,7 @@
         }
         
         .header-text {
-            flex-grow: 1; /* Memastikan teks judul mengambil sisa ruang */
+            flex-grow: 1;
         }
 
         h1 {
@@ -135,7 +134,7 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-top: 20px;
-            margin-bottom: 20px; /* Tambahkan margin bawah */
+            margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -271,7 +270,6 @@
         let allSalesData = [];
         let headerRow = [];
 
-        // --- OPTIMASI 1: Fungsi Utilitas ---
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -284,7 +282,6 @@
             return value ? value.trim().replace(/"/g, '') : '';
         }
 
-        // --- OPTIMASI 2: Mengambil dan Memproses Data Awal ---
         async function fetchAllData() {
             document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
             document.getElementById('total-sales-display').innerText = "Memuat...";
@@ -302,7 +299,7 @@
                     return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [row]; 
                 }).filter(row => row.join('').trim() !== "");
 
-                if (rows.length < 2) { // Minimal 1 header dan 1 baris data
+                if (rows.length < 2) {
                     document.getElementById("employee-data").innerHTML =
                         '<p class="error">Tidak ada data ditemukan selain header.</p>';
                     document.getElementById('total-sales-display').innerText = formatRupiah(0);
@@ -312,7 +309,6 @@
                 headerRow = rows[0].map(h => cleanCellValue(h));
                 allSalesData = rows.slice(1).map(row => row.map(cell => cleanCellValue(cell)));
                 
-                // Terapkan filter dan tampilkan data awal
                 applyFilterAndRender();
 
             } catch (error) {
@@ -323,7 +319,6 @@
             }
         }
 
-        // --- OPTIMASI 3: Fungsi Filter & Render Utama ---
         function applyFilterAndRender() {
             const startDateStr = document.getElementById('filter-start-date').value;
             const endDateStr = document.getElementById('filter-end-date').value;
@@ -337,13 +332,11 @@
                 const endDate = endDateStr ? new Date(endDateStr) : null;
 
                 filteredData = allSalesData.filter(row => {
-                    // Asumsi: Kolom pertama (indeks 0) adalah tanggal penjualan
                     const dateIndex = 0; 
-                    const rowDateStr = row[dateIndex]; // Sudah di-clean oleh fetchAllData
+                    const rowDateStr = row[dateIndex];
 
                     if (!rowDateStr) return false;
 
-                    // Mengambil hanya bagian tanggal dan membuatnya menjadi objek Date
                     const rowDate = new Date(rowDateStr.split(' ')[0]);
 
                     let isAfterStart = true;
@@ -353,7 +346,6 @@
 
                     let isBeforeEnd = true;
                     if (endDate) {
-                        // Optimasi: Gunakan tanggal yang dipilih + 1 hari agar mencakup hari penuh
                         const adjustedEndDate = new Date(endDate);
                         adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
                         isBeforeEnd = rowDate < adjustedEndDate;
@@ -365,8 +357,8 @@
 
             // 2. Perhitungan Total Penjualan & Merender Tabel
             
-            // Mencari kolom Total/Jumlah secara case-insensitive
-            const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total') || h.toLowerCase().includes('jumlah'));
+            // PERBAIKAN: Hanya mencari header yang mengandung kata 'total' (sesuai permintaan user)
+            const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total'));
             
             let html = "<div class='table-responsive'>";
             html += "<table><thead><tr>";
@@ -379,7 +371,7 @@
             if (totalIndex !== -1) {
                 filteredData.forEach(row => {
                     const totalCell = row[totalIndex] || "0";
-                    // Menghapus semua karakter non-digit kecuali koma dan titik (untuk desimal)
+                    // Membersihkan karakter mata uang, hanya menyisakan digit, koma, dan titik
                     const numericTotalCell = totalCell.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
                     const totalValue = parseFloat(numericTotalCell) || 0;
                     totalSales += totalValue;
@@ -399,7 +391,7 @@
                     });
                     html += "</tr>";
                 });
-                document.getElementById('total-sales-display').innerText = "Kolom Total Tidak Ditemukan";
+                document.getElementById('total-sales-display').innerText = "Kolom 'Total' Tidak Ditemukan";
             }
 
             html += "</tbody></table>";
@@ -413,17 +405,14 @@
             }
         }
         
-        // --- OPTIMASI 4: Event Listeners yang Jelas ---
+        // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
             fetchAllData();
 
-            // Tombol Muat Ulang
             document.getElementById("btn-refresh").addEventListener("click", fetchAllData);
 
-            // Tombol Terapkan Filter
             document.getElementById('btn-apply-filter').addEventListener('click', applyFilterAndRender);
 
-            // Filter otomatis saat input tanggal diubah
             document.getElementById('filter-start-date').addEventListener('change', applyFilterAndRender);
             document.getElementById('filter-end-date').addEventListener('change', applyFilterAndRender);
         });
