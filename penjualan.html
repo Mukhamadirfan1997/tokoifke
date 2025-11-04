@@ -6,105 +6,171 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Permissions-Policy" content="web-share=()" />
     <title>Data Penjualan - Toko IFKE</title>
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* CSS Baru untuk tampilan optimal dan responsif */
+        
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --background-light: #f8f9fa;
+            --text-color: #343a40;
+            --border-color: #dee2e6;
+        }
+
         body {
-            font-family: "Roboto", sans-serif;
-            margin: 0; /* Disesuaikan untuk responsivitas */
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
             padding: 20px;
-            background-color: #b3e3f5;
-            color: #333;
+            background-color: var(--background-light);
+            color: var(--text-color);
         }
 
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
+        /* Struktur Kontainer */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
 
-        /* --- CSS RESPONSIF BARU DITAMBAHKAN --- */
-        .table-responsive {
-            overflow-x: auto;
-            width: 100%;
-            margin-top: 20px;
+        /* Header dan Judul */
+        h1 {
+            color: var(--primary-color);
+            text-align: left;
+            margin-bottom: 5px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        /* Logo (Dummy Styling) */
+        .logo-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .logo {
+            max-width: 150px; /* Atur ukuran logo */
+            height: auto;
+        }
+        
+        /* Tombol Navigasi */
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
             margin-bottom: 20px;
         }
-        /* -------------------------------------- */
 
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1e7e34;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Kontainer Responsif Tabel */
+        .table-responsive {
+            overflow-x: auto; /* Kunci responsivitas tabel */
+            width: 100%;
+            margin-top: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        /* Gaya Tabel */
         table {
             width: 100%;
-            min-width: 600px; /* Minimal lebar agar kolom tidak terlalu sempit di layar kecil */
+            min-width: 700px; /* Menentukan lebar minimum agar tabel tidak terlalu padat */
             border-collapse: collapse;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-            /* Dipindahkan ke .table-responsive */
+            background-color: white;
         }
 
         th,
         td {
-            border: 1px solid #e0e0e0;
             padding: 12px 15px;
             text-align: left;
-            vertical-align: middle;
-            white-space: nowrap; /* Mencegah konten sel tabel pecah baris terlalu cepat */
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap; /* Mencegah pecah baris untuk sel data */
         }
 
         th {
-            background-color: #3498db;
-            color: #ffffff;
-            font-weight: 700;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
             text-transform: uppercase;
+            font-size: 0.85rem;
         }
 
         tr:nth-child(even) {
-            background-color: #f8f8f8;
+            background-color: var(--background-light);
         }
 
         tr:hover {
-            background-color: #eaf6fd;
-            transition: background-color 0.3s ease;
+            background-color: #e9ecef;
+            transition: background-color 0.2s;
         }
 
+        /* Gaya Status */
         .loading {
             text-align: center;
             font-style: italic;
-            color: #555;
+            color: var(--secondary-color);
             padding: 20px;
         }
 
         .error {
-            color: red;
+            color: #dc3545;
             text-align: center;
             padding: 20px;
-        }
-
-        .button-link {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-left: 30px;
-            background-color: #4caf50;
-            color: white;
-            text-decoration: none;
+            font-weight: 600;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
             border-radius: 5px;
-            font-size: 16px;
         }
 
-        .button-link:hover {
-            background-color: #45a049;
+        /* Media Query untuk Responsivitas Tambahan pada Tombol */
+        @media (max-width: 576px) {
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -112,84 +178,86 @@
 <body class="data-page-body">
     <div class="container data-page">
         <div class="logo-container">
-            <img src="tokoifke.png" alt="Logo Toko" class="logo" />
+            <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" /> 
         </div>
 
         <h1>Data Penjualan</h1>
         <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
 
         <div class="nav-buttons">
-            <a href="index.html" class="btn btn-primary">Tambah Data Baru</a>
-            <button id="btn-refresh" class="btn btn-secondary">Refresh Data</button>
+            <a href="index.html" class="btn btn-primary">➕ Tambah Data Baru</a>
+            <button id="btn-refresh" class="btn btn-secondary">🔄 Refresh Data</button>
         </div>
-        <div class="container">
-            <div id="employee-data">
-                <p class="loading">Memuat data...</p>
-            </div>
+        
+        <div id="employee-data">
+            <p class="loading">Memuat data...</p>
         </div>
+    </div>
 
-        <script>
-            const googleSheetUrl =
-                "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
+    <script>
+        const googleSheetUrl =
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
 
-            async function fetchEmployeeData() {
-                try {
-                    const response = await fetch(googleSheetUrl);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const csvText = await response.text();
-                    const rows = csvText
-                        .split("\n")
-                        .map((row) => row.split(","))
-                        .filter((row) => row.join("").trim() !== "");
+        async function fetchEmployeeData() {
+            try {
+                const response = await fetch(googleSheetUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                // Memparsing CSV
+                const rows = csvText
+                    .split("\n")
+                    .map((row) => row.split(","))
+                    .filter((row) => row.join("").trim() !== "");
 
-                    if (rows.length === 0) {
-                        document.getElementById("employee-data").innerHTML =
-                            '<p class="error">Tidak ada data ditemukan.</p>';
-                        return;
-                    }
+                if (rows.length === 0 || rows.length === 1 && rows[0].join("").trim() === "") {
+                    document.getElementById("employee-data").innerHTML =
+                        '<p class="error">Tidak ada data ditemukan.</p>';
+                    return;
+                }
 
-                    // --- PERBAIKAN LOGIKA JS UNTUK RESPONSIF ---
-                    let html = "<div class='table-responsive'>";
-                    html += "<table><thead><tr>";
-                    // Asumsi baris pertama adalah header
-                    rows[0].forEach((header) => {
-                        html += `<th>${header.trim()}</th>`;
-                    });
-                    html += "</tr></thead><tbody>";
+                // Membangun HTML Tabel
+                let html = "<div class='table-responsive'>";
+                html += "<table><thead><tr>";
+                // Header (baris pertama)
+                rows[0].forEach((header) => {
+                    html += `<th>${header.trim().replace(/"/g, '')}</th>`; // .replace digunakan untuk membersihkan tanda kutip yang mungkin muncul dari CSV
+                });
+                html += "</tr></thead><tbody>";
 
-                    // Iterasi dari baris kedua (data)
-                    for (let i = 1; i < rows.length; i++) {
+                // Data (mulai dari baris kedua)
+                for (let i = 1; i < rows.length; i++) {
+                    // Hanya memproses baris jika tidak kosong
+                    if (rows[i].join("").trim() !== "") {
                         html += "<tr>";
                         rows[i].forEach((cell) => {
-                            html += `<td>${cell.trim()}</td>`;
+                            html += `<td>${cell.trim().replace(/"/g, '')}</td>`;
                         });
                         html += "</tr>";
                     }
-                    html += "</tbody></table>";
-                    html += "</div>"; // Tutup div.table-responsive
-                    // ------------------------------------------
-
-                    document.getElementById("employee-data").innerHTML = html;
-                } catch (error) {
-                    console.error("Error fetching data:", error);
-                    document.getElementById("employee-data").innerHTML =
-                        '<p class="error">Gagal memuat data. Pastikan URL Google Sheet benar dan dipublikasikan. Detail error: ' +
-                        error.message +
-                        "</p>";
                 }
-            }
+                html += "</tbody></table>";
+                html += "</div>"; // Tutup div.table-responsive
 
+                document.getElementById("employee-data").innerHTML = html;
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById("employee-data").innerHTML =
+                    '<p class="error">Gagal memuat data. Pastikan URL Google Sheet benar dan dipublikasikan. Detail error: ' +
+                    error.message +
+                    "</p>";
+            }
+        }
+
+        fetchEmployeeData();
+        
+        // Fungsionalitas Refresh Data
+        document.getElementById("btn-refresh").addEventListener("click", () => {
+            document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
             fetchEmployeeData();
-            
-            // Tambahkan fungsionalitas refresh
-            document.getElementById("btn-refresh").addEventListener("click", () => {
-                document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
-                fetchEmployeeData();
-            });
-        </script>
-    </div>
+        });
+    </script>
 
 </body>
 
