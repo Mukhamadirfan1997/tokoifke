@@ -8,8 +8,7 @@
     <title>Data Penjualan - Toko IFKE</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ... (Variabel CSS dan body tetap sama) ... */
-        
+        /* Variabel Warna */
         :root {
             --primary-color: #007bff;
             --secondary-color: #6c757d;
@@ -27,54 +26,55 @@
             color: var(--text-color);
         }
 
-        /* PERUBAHAN: Container utama kini mencakup semua */
         .container {
             max-width: 1000px;
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 25px 30px; /* Padding sedikit lebih besar */
+            padding: 25px 30px;
             border-radius: 10px;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
         }
 
-        /* Header dan Judul - Gabungkan Logo dan Teks Judul */
+        /* PERBAIKAN: Layout Header (Logo di Kiri, Judul di Kanan) */
         .header-section {
-            display: flex; /* Menggunakan Flexbox untuk mensejajarkan logo dan judul */
+            display: flex;
             align-items: center;
-            gap: 15px; /* Jarak antara logo dan teks */
+            gap: 15px;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--border-color); /* Garis pemisah */
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 15px;
         }
 
-        /* Styling Logo */
         .logo-container {
-            /* Hapus margin-bottom dan text-align: center dari sebelumnya */
-            line-height: 0; /* Menghapus spasi ekstra di bawah gambar */
+            /* PERBAIKAN: Memastikan logo tidak rata tengah/terpisah */
+            flex-shrink: 0; /* Mencegah logo menyusut */
+            line-height: 0;
         }
         .logo {
-            max-width: 70px; /* Ukuran logo lebih kecil dan terintegrasi */
+            max-width: 70px;
             height: auto;
-            border-radius: 5px; /* Sedikit sentuhan visual pada logo */
+            border-radius: 5px;
         }
         
-        /* Judul */
+        .header-text {
+            flex-grow: 1; /* Memastikan teks judul mengambil sisa ruang */
+        }
+
         h1 {
             color: var(--primary-color);
-            margin: 0; /* Hapus margin default h1 */
+            margin: 0;
             font-size: 2rem;
             font-weight: 700;
         }
 
         .subtitle {
-            margin-top: 5px; /* Jarak dari h1 */
+            margin-top: 5px;
             margin-bottom: 0;
             color: var(--secondary-color);
             font-size: 0.9rem;
         }
         
-        /* ... (CSS Filter, Tombol, Tabel, dan Media Query lainnya tetap sama) ... */
-        
+        /* Filter dan Tombol */
         .filter-container {
             display: flex;
             flex-wrap: wrap;
@@ -87,6 +87,45 @@
             background-color: #f4f6f9;
         }
         
+        .filter-item label {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-right: 5px;
+        }
+        
+        .filter-item input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Total Penjualan Display */
         .total-sales-box {
             background-color: var(--primary-color);
             color: white;
@@ -96,20 +135,91 @@
             font-size: 1.1rem;
             font-weight: 600;
             margin-top: 20px;
+            margin-bottom: 20px; /* Tambahkan margin bawah */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        /* ... (dan semua CSS lainnya) ... */
 
+        .total-sales-box span {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        /* Tabel Responsif */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+
+        table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--background-light);
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+            transition: background-color 0.2s;
+        }
+        
+        /* Gaya Status & Error */
+        .loading, .error {
+            text-align: center;
+            padding: 20px;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: 600;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        /* Media Query Responsif */
+        @media (max-width: 768px) {
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
         @media (max-width: 576px) {
             .header-section {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            h1 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -122,7 +232,7 @@
             <div class="logo-container">
                 <img src="tokoifke.png" alt="Logo Toko IFKE" class="logo" /> 
             </div>
-            <div>
+            <div class="header-text">
                 <h1>Data Penjualan</h1>
                 <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
             </div>
@@ -153,7 +263,171 @@
             <p class="loading">Memuat data...</p>
         </div>
     </div>
+    
+    <script>
+        const googleSheetUrl =
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
+        
+        let allSalesData = [];
+        let headerRow = [];
 
-    </body>
+        // --- OPTIMASI 1: Fungsi Utilitas ---
+        function formatRupiah(number) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(number);
+        }
+
+        function cleanCellValue(value) {
+            return value ? value.trim().replace(/"/g, '') : '';
+        }
+
+        // --- OPTIMASI 2: Mengambil dan Memproses Data Awal ---
+        async function fetchAllData() {
+            document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
+            document.getElementById('total-sales-display').innerText = "Memuat...";
+
+            try {
+                const response = await fetch(googleSheetUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                
+                // Menggunakan Regex untuk menangani kasus koma di dalam tanda kutip (lebih kuat)
+                const rows = csvText.split('\n').map(row => {
+                    // Split berdasarkan koma di luar tanda kutip
+                    return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [row]; 
+                }).filter(row => row.join('').trim() !== "");
+
+                if (rows.length < 2) { // Minimal 1 header dan 1 baris data
+                    document.getElementById("employee-data").innerHTML =
+                        '<p class="error">Tidak ada data ditemukan selain header.</p>';
+                    document.getElementById('total-sales-display').innerText = formatRupiah(0);
+                    return;
+                }
+
+                headerRow = rows[0].map(h => cleanCellValue(h));
+                allSalesData = rows.slice(1).map(row => row.map(cell => cleanCellValue(cell)));
+                
+                // Terapkan filter dan tampilkan data awal
+                applyFilterAndRender();
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                document.getElementById("employee-data").innerHTML =
+                    '<p class="error">Gagal memuat data. Periksa URL Google Sheet dan koneksi. Detail: ' + error.message + "</p>";
+                document.getElementById('total-sales-display').innerText = "Gagal memuat";
+            }
+        }
+
+        // --- OPTIMASI 3: Fungsi Filter & Render Utama ---
+        function applyFilterAndRender() {
+            const startDateStr = document.getElementById('filter-start-date').value;
+            const endDateStr = document.getElementById('filter-end-date').value;
+            let totalSales = 0;
+            
+            let filteredData = allSalesData;
+            
+            // 1. Logika Pemfilteran Tanggal
+            if (startDateStr || endDateStr) {
+                const startDate = startDateStr ? new Date(startDateStr) : null;
+                const endDate = endDateStr ? new Date(endDateStr) : null;
+
+                filteredData = allSalesData.filter(row => {
+                    // Asumsi: Kolom pertama (indeks 0) adalah tanggal penjualan
+                    const dateIndex = 0; 
+                    const rowDateStr = row[dateIndex]; // Sudah di-clean oleh fetchAllData
+
+                    if (!rowDateStr) return false;
+
+                    // Mengambil hanya bagian tanggal dan membuatnya menjadi objek Date
+                    const rowDate = new Date(rowDateStr.split(' ')[0]);
+
+                    let isAfterStart = true;
+                    if (startDate) {
+                        isAfterStart = rowDate >= startDate;
+                    }
+
+                    let isBeforeEnd = true;
+                    if (endDate) {
+                        // Optimasi: Gunakan tanggal yang dipilih + 1 hari agar mencakup hari penuh
+                        const adjustedEndDate = new Date(endDate);
+                        adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
+                        isBeforeEnd = rowDate < adjustedEndDate;
+                    }
+
+                    return isAfterStart && isBeforeEnd;
+                });
+            }
+
+            // 2. Perhitungan Total Penjualan & Merender Tabel
+            
+            // Mencari kolom Total/Jumlah secara case-insensitive
+            const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total') || h.toLowerCase().includes('jumlah'));
+            
+            let html = "<div class='table-responsive'>";
+            html += "<table><thead><tr>";
+            
+            headerRow.forEach((header) => {
+                html += `<th>${header}</th>`;
+            });
+            html += "</tr></thead><tbody>";
+
+            if (totalIndex !== -1) {
+                filteredData.forEach(row => {
+                    const totalCell = row[totalIndex] || "0";
+                    // Menghapus semua karakter non-digit kecuali koma dan titik (untuk desimal)
+                    const numericTotalCell = totalCell.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
+                    const totalValue = parseFloat(numericTotalCell) || 0;
+                    totalSales += totalValue;
+
+                    html += "<tr>";
+                    row.forEach((cell) => {
+                        html += `<td>${cell}</td>`;
+                    });
+                    html += "</tr>";
+                });
+            } else {
+                 // Jika kolom Total tidak ditemukan
+                filteredData.forEach(row => {
+                    html += "<tr>";
+                    row.forEach((cell) => {
+                        html += `<td>${cell}</td>`;
+                    });
+                    html += "</tr>";
+                });
+                document.getElementById('total-sales-display').innerText = "Kolom Total Tidak Ditemukan";
+            }
+
+            html += "</tbody></table>";
+            html += "</div>";
+
+            document.getElementById("employee-data").innerHTML = html;
+            
+            // Perbarui Total Penjualan
+            if (totalIndex !== -1) {
+                document.getElementById('total-sales-display').innerText = formatRupiah(totalSales);
+            }
+        }
+        
+        // --- OPTIMASI 4: Event Listeners yang Jelas ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAllData();
+
+            // Tombol Muat Ulang
+            document.getElementById("btn-refresh").addEventListener("click", fetchAllData);
+
+            // Tombol Terapkan Filter
+            document.getElementById('btn-apply-filter').addEventListener('click', applyFilterAndRender);
+
+            // Filter otomatis saat input tanggal diubah
+            document.getElementById('filter-start-date').addEventListener('change', applyFilterAndRender);
+            document.getElementById('filter-end-date').addEventListener('change', applyFilterAndRender);
+        });
+    </script>
+</body>
 
 </html>
