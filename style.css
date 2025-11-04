@@ -1,0 +1,408 @@
+/* Pengaturan dasar dan font modern */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #71b9e8;
+  color: #333;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Body untuk halaman form (centered) */
+body:not(.data-page-body) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Kontainer utama formulir */
+.container {
+  background-color: #ffffff;
+  padding: 2.5em;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box; /* Padding tidak menambah lebar */
+}
+
+/* Penataan Logo */
+.logo-container {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.logo {
+  max-width: 150px;
+  height: auto;
+}
+
+/* Judul */
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+  font-weight: 600;
+}
+
+.subtitle {
+  text-align: center;
+  color: #7f8c8d;
+  margin-bottom: 2em;
+  font-size: 0.95em;
+}
+
+/* Grup input formulir */
+.form-group {
+  margin-bottom: 1.5em;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9em;
+}
+
+/* Styling untuk semua input dan select box */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box; /* Padding tidak menambah lebar */
+  font-family: "Poppins", sans-serif;
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Efek 'focus' saat diklik */
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+/* Grup responsif untuk jumlah dan satuan */
+.responsive-group {
+  display: flex;
+  gap: 1.5em; /* Jarak antar elemen */
+}
+
+.responsive-group .form-group {
+  flex: 1; /* Lebar fleksibel */
+}
+
+/* Styling input Total (readonly) */
+.total-group label {
+  font-size: 1em;
+  color: #2c3e50;
+}
+#total {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #27ae60; /* Warna hijau untuk total */
+  background-color: #f9f9f9;
+  border: 1px dashed #ccc;
+  text-align: right;
+  padding-right: 15px;
+}
+
+/* Tombol Kirim */
+button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Saat tombol diklik (loading) */
+button[type="submit"]:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Status Pesan (Sukses atau Gagal) */
+#status-pesan {
+  margin-top: 1.5em;
+  text-align: center;
+  font-size: 0.95em;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.sukses {
+  background-color: #e8f5e9; /* Hijau muda */
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.gagal {
+  background-color: #ffebee; /* Merah muda */
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+/* Spinner (indikator loading) */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styling untuk halaman data */
+.container.data-page {
+  max-width: 1200px;
+}
+
+/* Navigasi tombol */
+.nav-buttons {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 2em;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #2980b9, #3498db);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+  box-shadow: 0 5px 15px rgba(127, 140, 141, 0.4);
+}
+
+/* Loading container */
+.loading-container {
+  text-align: center;
+  padding: 3em;
+}
+
+.loading-container .spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(52, 152, 219, 0.3);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  margin: 0 auto 1em;
+}
+
+/* Error message */
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+/* Data info */
+.data-info {
+  margin-bottom: 1.5em;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.data-info p {
+  margin: 0;
+  color: #555;
+}
+
+/* Table container */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 0.95em;
+}
+
+thead {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  color: white;
+}
+
+th {
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Summary section */
+.summary {
+  background-color: #f8f9fa;
+  padding: 1.5em;
+  border-radius: 8px;
+  margin-top: 2em;
+}
+
+.summary h3 {
+  margin-top: 0;
+  margin-bottom: 1em;
+  color: #2c3e50;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5em;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.summary-label {
+  font-size: 0.9em;
+  color: #7f8c8d;
+  margin-bottom: 0.5em;
+}
+
+.summary-value {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Link ke halaman data di form */
+.link-data {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+.link-data a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.link-data a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Responsif untuk layar HP (di bawah 600px) */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  .container {
+    padding: 1.5em;
+  }
+  h1 {
+    font-size: 1.5em;
+  }
+  /* Buat grup jumlah dan satuan jadi vertikal */
+  .responsive-group {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  /* Tabel responsif untuk mobile */
+  .table-container {
+    font-size: 0.85em;
+  }
+  
+  th, td {
+    padding: 8px 6px;
+  }
+  
+  .nav-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}

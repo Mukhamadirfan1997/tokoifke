@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Permissions-Policy" content="web-share=()" />
+  <title>Form Pencatatan Penjualan</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="tokoifke.png" alt="Logo Toko" class="logo" />
+    </div>
+
+    <h1>Pencatatan Penjualan</h1>
+    <p class="subtitle">Masukkan data penjualan baru di bawah ini.</p>
+
+    <form id="form-penjualan">
+      <div class="form-group">
+        <label for="tanggal">1. Tanggal Pemesanan</label>
+        <input type="date" id="tanggal" name="tanggal" required />
+      </div>
+
+      <div class="form-group">
+        <label for="namaPemesan">2. Nama Pemesan</label>
+        <input type="text" id="namaPemesan" name="namaPemesan" placeholder="Contoh: Budi Santoso" required />
+      </div>
+
+      <div class="form-group">
+        <label for="namaBarang">3. Nama Barang</label>
+        <input type="text" id="namaBarang" name="namaBarang" placeholder="Contoh: Mangga Harum Manis" required />
+      </div>
+
+      <div class="responsive-group">
+        <div class="form-group">
+          <label for="jumlah">4. Jumlah</label>
+          <input type="number" id="jumlah" name="jumlah" placeholder="0" min="0" required />
+        </div>
+
+        <div class="form-group">
+          <label for="satuan">5. Satuan</label>
+          <select id="satuan" name="satuan" required>
+            <option value="">Pilih Satuan</option>
+            <option value="Kg">Kg</option>
+            <option value="Buah">Buah</option>
+            <option value="Paket">Paket</option>
+            <option value="Unit">Unit</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="harga">6. Harga Satuan (Rp)</label>
+        <input type="number" id="harga" name="harga" placeholder="Contoh: 15000" min="0" step="100" required />
+      </div>
+
+      <div class="form-group total-group">
+        <label for="total">7. Jumlah Total (Rp)</label>
+        <input type="text" id="total" name="total" value="Rp 0" readonly />
+      </div>
+
+      <button type="submit" id="tombol-kirim">
+        <span class="tombol-teks">Kirim Data</span>
+        <span class="spinner" style="display: none"></span>
+      </button>
+
+      <div id="status-pesan"></div>
+    </form>
+
+    <div class="link-data">
+      <a href="data.html">Lihat Data Penjualan →</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

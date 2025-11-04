@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Permissions-Policy" content="web-share=()" />
+    <title>Data Penjualan - Toko IFKE</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+
+<body class="data-page-body">
+    <div class="container data-page">
+        <div class="logo-container">
+            <img src="tokoifke.png" alt="Logo Toko" class="logo" />
+        </div>
+
+        <h1>Data Penjualan</h1>
+        <p class="subtitle">Daftar semua transaksi penjualan yang telah tercatat.</p>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-primary">Tambah Data Baru</a>
+            <button id="btn-refresh" class="btn btn-secondary">Refresh Data</button>
+        </div>
+
+        <div id="loading" class="loading-container">
+            <div class="spinner"></div>
+            <p>Memuat data...</p>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;"></div>
+
+        <div id="data-container" style="display: none;">
+            <div class="data-info">
+                <p>Total transaksi: <strong id="total-transaksi">0</strong></p>
+            </div>
+
+            <div class="table-container">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Nama Pemesan</th>
+                            <th>Nama Barang</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Harga Satuan</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Data akan dimasukkan di sini oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="summary">
+                <h3>Ringkasan</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Transaksi</span>
+                        <span class="summary-value" id="summary-total">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Penjualan</span>
+                        <span class="summary-value" id="summary-total-harga">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+</body>
+
+</html>
