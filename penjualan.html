@@ -16,7 +16,13 @@
             --background-light: #f8f9fa;
             --text-color: #343a40;
             --border-color: #dee2e6;
-            --mobile-bg-color: #71b9e8; /* Warna biru untuk mobile */
+            --mobile-bg-color: #71b9e8;
+            /* Warna biru untuk mobile */
+            --max-content-width: 1200px;
+            --side-padding: 40px;
+            /* Padding sisi desktop */
+            --mobile-padding: 15px;
+            /* Variabel padding mobile */
         }
 
         /* DEFAULT (DESKTOP): Full-Width Tanpa Background Biru */
@@ -24,29 +30,63 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #ffffff; /* Putih (Desktop Default) */
+            background-color: #ffffff;
+            /* Putih (Desktop Default) */
             color: var(--text-color);
         }
 
+        /* Container dibatasi lebar maksimum dan di tengah */
         .container {
-            /* Desktop: Full width, padding di sisi kiri/kanan. */
             width: 100%;
+            max-width: var(--max-content-width);
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 25px 30px;
+            /* Container menahan padding horizontal untuk SEMUA konten */
+            padding: 25px var(--side-padding);
             border-radius: 0;
             box-shadow: none;
             box-sizing: border-box;
         }
 
-        /* DEFAULT (DESKTOP): Logo di Samping */
+        /* Header diatur agar tetap berada dalam container saat di scroll pada DESKTOP */
         .header-section {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+
+            /* Membuat Header Sticky */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+
+            /* MODIFIKASI KUNCI FIX HEADER DESKTOP */
+            /* Menggunakan margin negatif untuk meregangkan header ke batas container */
+            margin-left: calc(-1 * var(--side-padding));
+            margin-right: calc(-1 * var(--side-padding));
+
+            /* Hapus width: calc(...), biarkan width: auto */
+            width: auto;
+            box-sizing: border-box;
+
+            /* Padding internal agar konten (Logo, H1, P) tetap sejajar dengan konten .container lainnya */
+            padding: 15px var(--side-padding);
+
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
+
+            /* Transisi untuk kehalusan */
+            transition: box-shadow 0.3s ease-in-out, padding 0.3s ease-in-out;
+            box-shadow: none;
+            /* Default: tidak ada shadow saat di posisi awal */
+        }
+
+        /* JavaScript akan menambahkan kelas 'scrolled' pada header-section ketika di-scroll */
+        .header-section.scrolled {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         .logo-container {
@@ -191,6 +231,7 @@
             color: #666;
             border-color: #ccc;
         }
+
         /* END KONTROL TABEL & PAGINASI */
 
         /* Total Penjualan Display */
@@ -214,7 +255,7 @@
             margin-top: 5px;
         }
 
-        /* Tabel Responsif */
+        /* Tabel Responsif (Harusnya sudah full 100% dari container) */
         .table-responsive {
             overflow-x: auto;
             width: 100%;
@@ -255,6 +296,37 @@
             transition: background-color 0.2s;
         }
 
+        /* Gaya Status Pesanan */
+        .status-cell {
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-align: center !important;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .status-cell.status-selesai {
+            background-color: var(--success-color);
+            /* Hijau */
+            color: white;
+        }
+
+        .status-cell.status-proses {
+            background-color: #ffc107;
+            /* Kuning (Warning) */
+            color: #343a40;
+            /* Teks Gelap */
+        }
+
+        .status-cell.status-batal {
+            background-color: #dc3545;
+            /* Merah (Danger) */
+            color: white;
+        }
+
+        /* END Gaya Status Pesanan */
+
         /* Gaya Status & Error */
         .loading,
         .error {
@@ -272,7 +344,8 @@
 
         /* --- MEDIA QUERY UNTUK HANDPHONE (Max Lebar 768px) --- */
         @media (max-width: 768px) {
-            /* Mobile: Tampilkan Background Biru */
+
+            /* FIX MOBILE: Mengembalikan padding body untuk menampilkan background biru */
             body {
                 padding: 20px;
                 background-color: var(--mobile-bg-color);
@@ -282,27 +355,40 @@
                 max-width: 100%;
                 border-radius: 10px;
                 box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-                padding: 15px;
+                /* Pastikan width 100% dan box-sizing: border-box agar pas dalam padding body */
+                width: 100%;
+                box-sizing: border-box;
+
+                padding: var(--mobile-padding);
+                margin: 0 auto;
             }
-            
-            /* PERUBAHAN UTAMA: Logo, H1, dan Subtitle Rata Tengah */
+
+            /* FIX MOBILE: Reset header sticky dari properti desktop */
             .header-section {
                 flex-direction: column;
-                align-items: center; /* Rata tengah vertikal */
-                text-align: center; /* Rata tengah teks */
+                align-items: center;
+                text-align: center;
+
+                /* Reset margin desktop */
+                margin: 0;
+                width: 100%;
+
+                /* Padding internal header menggunakan variabel mobile */
+                padding: 15px var(--mobile-padding);
+                box-sizing: border-box;
             }
 
             /* Logo Dibuat Lebih Besar */
             .logo {
-                max-width: 120px; /* Diperbesar dari 100px */
+                max-width: 120px;
                 margin-bottom: 10px;
             }
 
             /* H1 Dibuat Lebih Besar dan Rata Tengah */
             h1 {
-                font-size: 2rem; /* Diperbesar dari 1.5rem */
+                font-size: 2rem;
             }
-            
+
             /* Subtitle Rata Tengah */
             .subtitle {
                 text-align: center;
@@ -317,7 +403,7 @@
             .btn {
                 width: 100%;
                 text-align: center;
-                box-sizing: border-box; 
+                box-sizing: border-box;
             }
 
             /* Tombol Filter Dibuat responsive */
@@ -327,7 +413,7 @@
             }
 
             .filter-item {
-                 width: 100%;
+                width: 100%;
             }
 
             .filter-item input[type="date"],
@@ -336,7 +422,7 @@
                 box-sizing: border-box;
                 margin-top: 5px;
             }
-            
+
             /* Paginasi dan Kontrol Tabel */
             .table-controls {
                 flex-direction: column;
@@ -382,7 +468,7 @@
             <a href="index.html" class="btn btn-primary">➕ Tambah Data Baru</a>
             <button id="btn-refresh" class="btn btn-secondary">🔄 Muat Ulang Data</button>
         </div>
-        
+
         <div class="table-controls">
             <div class="rows-per-page">
                 <label for="rows-per-page-select">Baris per Halaman:</label>
@@ -395,7 +481,7 @@
                 </select>
             </div>
             <div id="pagination-controls" class="pagination-controls">
-                </div>
+            </div>
         </div>
         <div class="total-sales-box">
             Total Penjualan yang Ditampilkan: <span id="total-sales-display">Rp 0</span>
@@ -406,274 +492,7 @@
         </div>
     </div>
 
-    <script>
-        const googleSheetUrl =
-            "https://docs.google.com/spreadsheets/d/e/2PACX-1vSVO_Ihk_q3bjL-Yn8e-VcYOk9EkfggR8u_s01HD5vcVNwfT8Jf0XyeUHcxEU51V1Fl1Tgs6VtIj3Xp/pub?gid=0&single=true&output=csv";
-
-        let allSalesData = [];
-        let headerRow = [];
-        
-        // VARIABEL STATE PAGINASI
-        let currentPage = 1;
-        let rowsPerPage = 10;
-        let filteredDataGlobal = [];
-
-        function formatRupiah(number) {
-            return new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(number);
-        }
-
-        function cleanCellValue(value) {
-            return value ? value.trim().replace(/"/g, '') : '';
-        }
-
-        // FUNGSI UTILITY UNTUK MEMBUAT TOMBOL PAGINASI
-        function createPageButton(text, pageNum, isDisabled, isActive) {
-            const button = document.createElement('button');
-            button.innerText = text;
-            button.classList.add('page-button');
-            if (isActive) {
-                button.classList.add('active');
-            }
-            button.disabled = isDisabled;
-
-            if (!isDisabled) {
-                button.addEventListener('click', () => {
-                    currentPage = pageNum;
-                    renderTableWithPagination();
-                });
-            }
-            return button;
-        }
-
-        async function fetchAllData() {
-            document.getElementById("employee-data").innerHTML = '<p class="loading">Memuat data...</p>';
-            document.getElementById('total-sales-display').innerText = "Memuat...";
-
-            try {
-                const response = await fetch(googleSheetUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const csvText = await response.text();
-
-                // Menggunakan Regex untuk menangani kasus koma di dalam tanda kutip (lebih kuat)
-                const rows = csvText.split('\n').map(row => {
-                    // Split berdasarkan koma di luar tanda kutip
-                    return row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g) || [row];
-                }).filter(row => row.join('').trim() !== "");
-
-                if (rows.length < 2) {
-                    document.getElementById("employee-data").innerHTML =
-                        '<p class="error">Tidak ada data ditemukan selain header.</p>';
-                    document.getElementById('total-sales-display').innerText = formatRupiah(0);
-                    return;
-                }
-
-                headerRow = rows[0].map(h => cleanCellValue(h));
-                allSalesData = rows.slice(1).map(row => row.map(cell => cleanCellValue(cell)));
-
-                // SIMPAN SEMUA DATA YANG SUDAH DIAMBIL UNTUK FILTERING
-                filteredDataGlobal = allSalesData;
-                applyFilterAndRender();
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                document.getElementById("employee-data").innerHTML =
-                    '<p class="error">Gagal memuat data. Periksa URL Google Sheet dan koneksi. Detail: ' + error.message + "</p>";
-                document.getElementById('total-sales-display').innerText = "Gagal memuat";
-            }
-        }
-
-        function applyFilterAndRender() {
-            const startDateStr = document.getElementById('filter-start-date').value;
-            const endDateStr = document.getElementById('filter-end-date').value;
-            
-            // RESET HALAMAN KE-1 SETIAP KALI FILTER BERUBAH
-            currentPage = 1; 
-
-            let filteredData = allSalesData;
-
-            // 1. Logika Pemfilteran Tanggal
-            if (startDateStr || endDateStr) {
-                const startDate = startDateStr ? new Date(startDateStr) : null;
-                const endDate = endDateStr ? new Date(endDateStr) : null;
-
-                filteredData = allSalesData.filter(row => {
-                    const dateIndex = 0;
-                    const rowDateStr = row[dateIndex];
-
-                    if (!rowDateStr) return false;
-
-                    const rowDate = new Date(rowDateStr.split(' ')[0]);
-
-                    let isAfterStart = true;
-                    if (startDate) {
-                        isAfterStart = rowDate >= startDate;
-                    }
-
-                    let isBeforeEnd = true;
-                    if (endDate) {
-                        const adjustedEndDate = new Date(endDate);
-                        adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
-                        isBeforeEnd = rowDate < adjustedEndDate;
-                    }
-
-                    return isAfterStart && isBeforeEnd;
-                });
-            }
-            
-            // SIMPAN DATA YANG SUDAH DIFILTER UNTUK DIGUNAKAN OLEH PAGINASI
-            filteredDataGlobal = filteredData;
-            renderTableWithPagination();
-        }
-
-        // FUNGSI UNTUK MERENDER TABEL DENGAN PAGINASI
-        function renderTableWithPagination() {
-            const dataToRender = filteredDataGlobal;
-            let totalSales = 0;
-            
-            const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total'));
-            const tableContainer = document.getElementById("employee-data");
-            const totalSalesDisplay = document.getElementById('total-sales-display');
-            const paginationControls = document.getElementById('pagination-controls');
-
-            // 1. LOGIKA PAGINASI
-            const rowsPerPageIndex = document.getElementById('rows-per-page-select').value;
-            
-            // Mengatur rowsPerPage. Jika '0' (Semua), tampilkan semua baris.
-            rowsPerPage = parseInt(rowsPerPageIndex) || dataToRender.length; 
-            if (rowsPerPage === 0) rowsPerPage = dataToRender.length; 
-
-            const totalRows = dataToRender.length;
-            const totalPages = rowsPerPage === dataToRender.length ? 1 : Math.ceil(totalRows / rowsPerPage);
-            
-            // Batasi currentPage agar tidak melebihi atau kurang dari batas
-            if (currentPage > totalPages) {
-                currentPage = totalPages > 0 ? totalPages : 1;
-            }
-            if (currentPage < 1) {
-                currentPage = 1;
-            }
-
-            const startIndex = (currentPage - 1) * rowsPerPage;
-            const endIndex = rowsPerPage === dataToRender.length ? totalRows : Math.min(startIndex + rowsPerPage, totalRows);
-            const paginatedData = dataToRender.slice(startIndex, endIndex);
-
-            // 2. PERHITUNGAN TOTAL PENJUALAN & MERENDER TABEL
-            
-            // Perhitungan total penjualan (menggunakan SEMUA data yang difilter)
-            if (totalIndex !== -1) {
-                dataToRender.forEach(row => {
-                    const totalCell = row[totalIndex] || "0";
-                    const numericTotalCell = totalCell.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
-                    const totalValue = parseFloat(numericTotalCell) || 0;
-                    totalSales += totalValue;
-                });
-            }
-
-            let html = "<div class='table-responsive'>";
-            html += "<table><thead><tr>";
-
-            headerRow.forEach((header) => {
-                html += `<th>${header}</th>`;
-            });
-            html += "</tr></thead><tbody>";
-
-            // Merender baris yang dipaginasi
-            if (paginatedData.length > 0) {
-                paginatedData.forEach(row => {
-                    html += "<tr>";
-                    row.forEach((cell) => {
-                        html += `<td>${cell}</td>`;
-                    });
-                    html += "</tr>";
-                });
-            } else {
-                 html += '<tr><td colspan="' + headerRow.length + '"><p class="loading">Tidak ada data yang tersedia di halaman ini atau filter yang diterapkan.</p></td></tr>';
-            }
-            
-            html += "</tbody></table>";
-            html += "</div>";
-
-            tableContainer.innerHTML = html;
-
-            // Perbarui Total Penjualan
-            if (totalIndex !== -1) {
-                totalSalesDisplay.innerText = formatRupiah(totalSales);
-            } else {
-                totalSalesDisplay.innerText = "Kolom 'Total' Tidak Ditemukan";
-            }
-        
-            // 3. MERENDER KONTROL PAGINASI
-            paginationControls.innerHTML = ''; 
-
-            if (totalPages > 1) {
-                const prevButton = createPageButton('← Sebelumnya', currentPage - 1, currentPage === 1, false);
-                paginationControls.appendChild(prevButton);
-
-                // Logika tampilan tombol agar tidak terlalu banyak (menampilkan maks 5 tombol di sekitar halaman aktif)
-                let startPage = Math.max(1, currentPage - 2);
-                let endPage = Math.min(totalPages, currentPage + 2);
-
-                if (currentPage <= 3) {
-                    endPage = Math.min(totalPages, 5);
-                } else if (currentPage > totalPages - 2) {
-                    startPage = Math.max(1, totalPages - 4);
-                }
-                
-                // Tombol '1' dan elipsis di awal
-                if (startPage > 1) {
-                    paginationControls.appendChild(createPageButton('1', 1, false, currentPage === 1));
-                    if (startPage > 2) {
-                        const dots = document.createElement('span');
-                        dots.innerText = '...';
-                        dots.style.padding = '8px 5px';
-                        paginationControls.appendChild(dots);
-                    }
-                }
-
-                // Tombol halaman di tengah
-                for (let i = startPage; i <= endPage; i++) {
-                    const button = createPageButton(i.toString(), i, false, currentPage === i);
-                    paginationControls.appendChild(button);
-                }
-                
-                // Elipsis dan tombol terakhir di akhir
-                if (endPage < totalPages) {
-                     if (endPage < totalPages - 1) {
-                        const dots = document.createElement('span');
-                        dots.innerText = '...';
-                        dots.style.padding = '8px 5px';
-                        paginationControls.appendChild(dots);
-                    }
-                    paginationControls.appendChild(createPageButton(totalPages.toString(), totalPages, false, currentPage === totalPages));
-                }
-
-                const nextButton = createPageButton('Berikutnya →', currentPage + 1, currentPage === totalPages, false);
-                paginationControls.appendChild(nextButton);
-            }
-        }
-
-
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchAllData();
-
-            document.getElementById("btn-refresh").addEventListener("click", fetchAllData);
-
-            document.getElementById('btn-apply-filter').addEventListener('click', applyFilterAndRender);
-
-            document.getElementById('filter-start-date').addEventListener('change', applyFilterAndRender);
-            document.getElementById('filter-end-date').addEventListener('change', applyFilterAndRender);
-            
-            // EVENT LISTENER UNTUK KONTROL JUMLAH BARIS
-            document.getElementById('rows-per-page-select').addEventListener('change', applyFilterAndRender);
-        });
-    </script>
+    <script src="penjualan.js"></script>
 </body>
 
 </html>
