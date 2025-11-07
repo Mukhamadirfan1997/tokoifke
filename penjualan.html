@@ -16,26 +16,30 @@
             --background-light: #f8f9fa;
             --text-color: #343a40;
             --border-color: #dee2e6;
+            --mobile-bg-color: #71b9e8; /* Warna biru untuk mobile */
         }
 
+        /* DEFAULT (DESKTOP): Full-Width Tanpa Background Biru */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #71b9e8;
+            padding: 0;
+            background-color: #ffffff; /* Putih (Desktop Default) */
             color: var(--text-color);
         }
 
         .container {
-            max-width: 1000px;
+            /* Desktop: Full width, padding di sisi kiri/kanan. */
+            width: 100%;
             margin: 0 auto;
             background-color: #ffffff;
             padding: 25px 30px;
-            border-radius: 10px;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            box-shadow: none;
+            box-sizing: border-box;
         }
 
-        /* PERBAIKAN LOGO: Rata Kiri dengan Flexbox */
+        /* DEFAULT (DESKTOP): Logo di Samping */
         .header-section {
             display: flex;
             align-items: center;
@@ -50,6 +54,7 @@
             line-height: 0;
         }
 
+        /* Ukuran Logo Default (Desktop) */
         .logo {
             max-width: 70px;
             height: auto;
@@ -87,6 +92,11 @@
             background-color: #f4f6f9;
         }
 
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
         .filter-item label {
             font-weight: 600;
             color: var(--text-color);
@@ -107,6 +117,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: background-color 0.3s ease;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -124,6 +135,63 @@
             gap: 10px;
             margin-bottom: 20px;
         }
+
+        /* KONTROL TABEL & PAGINASI */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 10px;
+        }
+
+        .rows-per-page label {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .rows-per-page select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .page-button {
+            padding: 8px 12px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            background-color: white;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            font-weight: 600;
+            min-width: 40px;
+        }
+
+        .page-button:hover:not(:disabled) {
+            background-color: #e9ecef;
+        }
+
+        .page-button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .page-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+            background-color: #ccc;
+            color: #666;
+            border-color: #ccc;
+        }
+        /* END KONTROL TABEL & PAGINASI */
 
         /* Total Penjualan Display */
         .total-sales-box {
@@ -202,31 +270,84 @@
             border-radius: 5px;
         }
 
-        /* Media Query Responsif */
+        /* --- MEDIA QUERY UNTUK HANDPHONE (Max Lebar 768px) --- */
         @media (max-width: 768px) {
-            .filter-container {
-                flex-direction: column;
-                align-items: flex-start;
+            /* Mobile: Tampilkan Background Biru */
+            body {
+                padding: 20px;
+                background-color: var(--mobile-bg-color);
             }
-        }
 
-        @media (max-width: 576px) {
+            .container {
+                max-width: 100%;
+                border-radius: 10px;
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+                padding: 15px;
+            }
+            
+            /* PERUBAHAN UTAMA: Logo, H1, dan Subtitle Rata Tengah */
             .header-section {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center; /* Rata tengah vertikal */
+                text-align: center; /* Rata tengah teks */
             }
 
+            /* Logo Dibuat Lebih Besar */
+            .logo {
+                max-width: 120px; /* Diperbesar dari 100px */
+                margin-bottom: 10px;
+            }
+
+            /* H1 Dibuat Lebih Besar dan Rata Tengah */
+            h1 {
+                font-size: 2rem; /* Diperbesar dari 1.5rem */
+            }
+            
+            /* Subtitle Rata Tengah */
+            .subtitle {
+                text-align: center;
+            }
+
+            /* Tombol Navigasi dibuat lebar penuh */
             .nav-buttons {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .btn {
                 width: 100%;
                 text-align: center;
+                box-sizing: border-box; 
             }
 
-            h1 {
-                font-size: 1.5rem;
+            /* Tombol Filter Dibuat responsive */
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-item {
+                 width: 100%;
+            }
+
+            .filter-item input[type="date"],
+            #btn-apply-filter {
+                width: 100%;
+                box-sizing: border-box;
+                margin-top: 5px;
+            }
+            
+            /* Paginasi dan Kontrol Tabel */
+            .table-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pagination-controls {
+                justify-content: center;
+                margin-top: 10px;
+                flex-wrap: wrap;
+                width: 100%;
             }
         }
     </style>
@@ -261,7 +382,21 @@
             <a href="index.html" class="btn btn-primary">➕ Tambah Data Baru</a>
             <button id="btn-refresh" class="btn btn-secondary">🔄 Muat Ulang Data</button>
         </div>
-
+        
+        <div class="table-controls">
+            <div class="rows-per-page">
+                <label for="rows-per-page-select">Baris per Halaman:</label>
+                <select id="rows-per-page-select">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="0">Semua</option>
+                </select>
+            </div>
+            <div id="pagination-controls" class="pagination-controls">
+                </div>
+        </div>
         <div class="total-sales-box">
             Total Penjualan yang Ditampilkan: <span id="total-sales-display">Rp 0</span>
         </div>
@@ -277,6 +412,11 @@
 
         let allSalesData = [];
         let headerRow = [];
+        
+        // VARIABEL STATE PAGINASI
+        let currentPage = 1;
+        let rowsPerPage = 10;
+        let filteredDataGlobal = [];
 
         function formatRupiah(number) {
             return new Intl.NumberFormat('id-ID', {
@@ -288,6 +428,25 @@
 
         function cleanCellValue(value) {
             return value ? value.trim().replace(/"/g, '') : '';
+        }
+
+        // FUNGSI UTILITY UNTUK MEMBUAT TOMBOL PAGINASI
+        function createPageButton(text, pageNum, isDisabled, isActive) {
+            const button = document.createElement('button');
+            button.innerText = text;
+            button.classList.add('page-button');
+            if (isActive) {
+                button.classList.add('active');
+            }
+            button.disabled = isDisabled;
+
+            if (!isDisabled) {
+                button.addEventListener('click', () => {
+                    currentPage = pageNum;
+                    renderTableWithPagination();
+                });
+            }
+            return button;
         }
 
         async function fetchAllData() {
@@ -317,6 +476,8 @@
                 headerRow = rows[0].map(h => cleanCellValue(h));
                 allSalesData = rows.slice(1).map(row => row.map(cell => cleanCellValue(cell)));
 
+                // SIMPAN SEMUA DATA YANG SUDAH DIAMBIL UNTUK FILTERING
+                filteredDataGlobal = allSalesData;
                 applyFilterAndRender();
 
             } catch (error) {
@@ -330,7 +491,9 @@
         function applyFilterAndRender() {
             const startDateStr = document.getElementById('filter-start-date').value;
             const endDateStr = document.getElementById('filter-end-date').value;
-            let totalSales = 0;
+            
+            // RESET HALAMAN KE-1 SETIAP KALI FILTER BERUBAH
+            currentPage = 1; 
 
             let filteredData = allSalesData;
 
@@ -362,11 +525,55 @@
                     return isAfterStart && isBeforeEnd;
                 });
             }
+            
+            // SIMPAN DATA YANG SUDAH DIFILTER UNTUK DIGUNAKAN OLEH PAGINASI
+            filteredDataGlobal = filteredData;
+            renderTableWithPagination();
+        }
 
-            // 2. Perhitungan Total Penjualan & Merender Tabel
-
-            // PERBAIKAN: Hanya mencari header yang mengandung kata 'total' (sesuai permintaan user)
+        // FUNGSI UNTUK MERENDER TABEL DENGAN PAGINASI
+        function renderTableWithPagination() {
+            const dataToRender = filteredDataGlobal;
+            let totalSales = 0;
+            
             const totalIndex = headerRow.findIndex(h => h.toLowerCase().includes('total'));
+            const tableContainer = document.getElementById("employee-data");
+            const totalSalesDisplay = document.getElementById('total-sales-display');
+            const paginationControls = document.getElementById('pagination-controls');
+
+            // 1. LOGIKA PAGINASI
+            const rowsPerPageIndex = document.getElementById('rows-per-page-select').value;
+            
+            // Mengatur rowsPerPage. Jika '0' (Semua), tampilkan semua baris.
+            rowsPerPage = parseInt(rowsPerPageIndex) || dataToRender.length; 
+            if (rowsPerPage === 0) rowsPerPage = dataToRender.length; 
+
+            const totalRows = dataToRender.length;
+            const totalPages = rowsPerPage === dataToRender.length ? 1 : Math.ceil(totalRows / rowsPerPage);
+            
+            // Batasi currentPage agar tidak melebihi atau kurang dari batas
+            if (currentPage > totalPages) {
+                currentPage = totalPages > 0 ? totalPages : 1;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = rowsPerPage === dataToRender.length ? totalRows : Math.min(startIndex + rowsPerPage, totalRows);
+            const paginatedData = dataToRender.slice(startIndex, endIndex);
+
+            // 2. PERHITUNGAN TOTAL PENJUALAN & MERENDER TABEL
+            
+            // Perhitungan total penjualan (menggunakan SEMUA data yang difilter)
+            if (totalIndex !== -1) {
+                dataToRender.forEach(row => {
+                    const totalCell = row[totalIndex] || "0";
+                    const numericTotalCell = totalCell.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
+                    const totalValue = parseFloat(numericTotalCell) || 0;
+                    totalSales += totalValue;
+                });
+            }
 
             let html = "<div class='table-responsive'>";
             html += "<table><thead><tr>";
@@ -376,14 +583,9 @@
             });
             html += "</tr></thead><tbody>";
 
-            if (totalIndex !== -1) {
-                filteredData.forEach(row => {
-                    const totalCell = row[totalIndex] || "0";
-                    // Membersihkan karakter mata uang, hanya menyisakan digit, koma, dan titik
-                    const numericTotalCell = totalCell.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
-                    const totalValue = parseFloat(numericTotalCell) || 0;
-                    totalSales += totalValue;
-
+            // Merender baris yang dipaginasi
+            if (paginatedData.length > 0) {
+                paginatedData.forEach(row => {
                     html += "<tr>";
                     row.forEach((cell) => {
                         html += `<td>${cell}</td>`;
@@ -391,27 +593,71 @@
                     html += "</tr>";
                 });
             } else {
-                // Jika kolom Total tidak ditemukan
-                filteredData.forEach(row => {
-                    html += "<tr>";
-                    row.forEach((cell) => {
-                        html += `<td>${cell}</td>`;
-                    });
-                    html += "</tr>";
-                });
-                document.getElementById('total-sales-display').innerText = "Kolom 'Total' Tidak Ditemukan";
+                 html += '<tr><td colspan="' + headerRow.length + '"><p class="loading">Tidak ada data yang tersedia di halaman ini atau filter yang diterapkan.</p></td></tr>';
             }
-
+            
             html += "</tbody></table>";
             html += "</div>";
 
-            document.getElementById("employee-data").innerHTML = html;
+            tableContainer.innerHTML = html;
 
             // Perbarui Total Penjualan
             if (totalIndex !== -1) {
-                document.getElementById('total-sales-display').innerText = formatRupiah(totalSales);
+                totalSalesDisplay.innerText = formatRupiah(totalSales);
+            } else {
+                totalSalesDisplay.innerText = "Kolom 'Total' Tidak Ditemukan";
+            }
+        
+            // 3. MERENDER KONTROL PAGINASI
+            paginationControls.innerHTML = ''; 
+
+            if (totalPages > 1) {
+                const prevButton = createPageButton('← Sebelumnya', currentPage - 1, currentPage === 1, false);
+                paginationControls.appendChild(prevButton);
+
+                // Logika tampilan tombol agar tidak terlalu banyak (menampilkan maks 5 tombol di sekitar halaman aktif)
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, currentPage + 2);
+
+                if (currentPage <= 3) {
+                    endPage = Math.min(totalPages, 5);
+                } else if (currentPage > totalPages - 2) {
+                    startPage = Math.max(1, totalPages - 4);
+                }
+                
+                // Tombol '1' dan elipsis di awal
+                if (startPage > 1) {
+                    paginationControls.appendChild(createPageButton('1', 1, false, currentPage === 1));
+                    if (startPage > 2) {
+                        const dots = document.createElement('span');
+                        dots.innerText = '...';
+                        dots.style.padding = '8px 5px';
+                        paginationControls.appendChild(dots);
+                    }
+                }
+
+                // Tombol halaman di tengah
+                for (let i = startPage; i <= endPage; i++) {
+                    const button = createPageButton(i.toString(), i, false, currentPage === i);
+                    paginationControls.appendChild(button);
+                }
+                
+                // Elipsis dan tombol terakhir di akhir
+                if (endPage < totalPages) {
+                     if (endPage < totalPages - 1) {
+                        const dots = document.createElement('span');
+                        dots.innerText = '...';
+                        dots.style.padding = '8px 5px';
+                        paginationControls.appendChild(dots);
+                    }
+                    paginationControls.appendChild(createPageButton(totalPages.toString(), totalPages, false, currentPage === totalPages));
+                }
+
+                const nextButton = createPageButton('Berikutnya →', currentPage + 1, currentPage === totalPages, false);
+                paginationControls.appendChild(nextButton);
             }
         }
+
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', () => {
@@ -423,9 +669,11 @@
 
             document.getElementById('filter-start-date').addEventListener('change', applyFilterAndRender);
             document.getElementById('filter-end-date').addEventListener('change', applyFilterAndRender);
+            
+            // EVENT LISTENER UNTUK KONTROL JUMLAH BARIS
+            document.getElementById('rows-per-page-select').addEventListener('change', applyFilterAndRender);
         });
     </script>
 </body>
 
 </html>
-
