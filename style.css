@@ -357,7 +357,7 @@ tbody tr:last-child td {
 }
 
 .link-data a {
-  color: #00c92f;
+  color: #e2e5e5;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
@@ -406,5 +406,6 @@ tbody tr:last-child td {
     grid-template-columns: 1fr;
   }
 }
+
 
 
