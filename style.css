@@ -357,14 +357,14 @@ tbody tr:last-child td {
 }
 
 .link-data a {
-  color: #3498db;
+  color: #f4d526;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .link-data a:hover {
-  color: #2980b9;
+  color: #ffffff;
   text-decoration: underline;
 }
 
@@ -406,3 +406,4 @@ tbody tr:last-child td {
     grid-template-columns: 1fr;
   }
 }
+
